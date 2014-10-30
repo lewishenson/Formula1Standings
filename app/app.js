@@ -1,12 +1,32 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+angular.module('F1FeederApp', [
+  'F1FeederApp.controllers'
+]);
+
+angular.module('F1FeederApp.controllers', []).controller('driversController', function($scope) {
+    $scope.driversList = [
+      {
+          Driver: {
+              givenName: 'Sebastian',
+              familyName: 'Vettel'
+          },
+          points: 322,
+          nationality: "German",
+          Constructors: [
+              {name: "Red Bull"}
+          ]
+      },
+      {
+          Driver: {
+          givenName: 'Fernando',
+              familyName: 'Alonso'
+          },
+          points: 207,
+          nationality: "Spanish",
+          Constructors: [
+              {name: "Ferrari"}
+          ]
+      }
+    ];
+});
