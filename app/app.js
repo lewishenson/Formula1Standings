@@ -9,7 +9,7 @@ angular
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when("/drivers", { templateUrl: "drivers/list.html", controller: "driversController" }).
-      //when("/drivers/:id", { templateUrl: "drivers/individual.html", controller: "driverController" }).
+      when("/drivers/:id", { templateUrl: "drivers/individual.html", controller: "driverController" }).
       otherwise({redirectTo: '/drivers'});
   }]);
 
@@ -27,6 +27,19 @@ angular
     ergastAPIservice.getDrivers().success(function (response) {
         $scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     });
+  })
+  .controller('driverController', function($scope, $routeParams, ergastAPIservice) {
+    $scope.id = $routeParams.id;
+    $scope.races = [];
+    $scope.driver = null;
+
+    ergastAPIservice.getDriverDetails($scope.id).success(function (response) {
+        $scope.driver = response.MRData.StandingsTable.StandingsLists[0].DriverStandings[0]; 
+    });
+
+    ergastAPIservice.getDriverRaces($scope.id).success(function (response) {
+        $scope.races = response.MRData.RaceTable.Races; 
+    }); 
   });
 
 angular
@@ -38,6 +51,20 @@ angular
       return $http({
         method: 'JSONP', 
         url: 'http://ergast.com/api/f1/2014/driverStandings.json?callback=JSON_CALLBACK'
+      });
+    }
+
+    ergastAPI.getDriverDetails = function(id) {
+      return $http({
+        method: 'JSONP', 
+        url: 'http://ergast.com/api/f1/2014/drivers/'+ id +'/driverStandings.json?callback=JSON_CALLBACK'
+      });
+    }
+
+    ergastAPI.getDriverRaces = function(id) {
+      return $http({
+        method: 'JSONP', 
+        url: 'http://ergast.com/api/f1/2014/drivers/'+ id +'/results.json?callback=JSON_CALLBACK'
       });
     }
 
