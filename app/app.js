@@ -6,6 +6,7 @@ angular.module('F1FeederApp', [
 ]);
 
 angular.module('F1FeederApp.controllers', []).controller('driversController', function($scope, ergastAPIservice) {
+    $scope.nameFilter = null;
     $scope.driversList = [];
 
     ergastAPIservice.getDrivers().success(function (response) {
