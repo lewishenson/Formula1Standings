@@ -14,33 +14,13 @@
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-<body ng-controller="driversController">
+<body>
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <input type="text" ng-model="nameFilter" placeholder="Search..."/>
+  <ng-view></ng-view>
 
-  <table>
-    <thead>
-      <tr><th colspan="4">Drivers Championship Standings</th></tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="driver in driversList | filter: searchFilter">
-        <td>{{$index + 1}}</td>
-        <td>
-          <img src="img/flags/{{driver.Driver.nationality}}.png" />
-          {{driver.Driver.givenName}}&nbsp;{{driver.Driver.familyName}}
-        </td>
-        <td>{{driver.Constructors[0].name}}</td>
-        <td>{{driver.points}}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>

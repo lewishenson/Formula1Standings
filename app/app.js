@@ -1,11 +1,21 @@
 'use strict';
 
-angular.module('F1FeederApp', [
-  'F1FeederApp.controllers',
-  'F1FeederApp.services'
-]);
+angular
+  .module('F1FeederApp', [
+    'F1FeederApp.controllers',
+    'F1FeederApp.services',
+    'ngRoute'
+  ])
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+      when("/drivers", { templateUrl: "drivers/list.html", controller: "driversController" }).
+      //when("/drivers/:id", { templateUrl: "drivers/individual.html", controller: "driverController" }).
+      otherwise({redirectTo: '/drivers'});
+  }]);
 
-angular.module('F1FeederApp.controllers', []).controller('driversController', function($scope, ergastAPIservice) {
+angular
+  .module('F1FeederApp.controllers', [])
+  .controller('driversController', function($scope, ergastAPIservice) {
     $scope.nameFilter = null;
     $scope.driversList = [];
 
@@ -19,7 +29,9 @@ angular.module('F1FeederApp.controllers', []).controller('driversController', fu
     });
   });
 
-angular.module('F1FeederApp.services', []).  factory('ergastAPIservice', function($http) {
+angular
+  .module('F1FeederApp.services', [])
+  .factory('ergastAPIservice', function($http) {
     var ergastAPI = {};
 
     ergastAPI.getDrivers = function() {
